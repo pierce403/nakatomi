@@ -6,7 +6,7 @@ import random
 def search(query,limit,offset):
 
   if query=='':
-    query='contract'
+    query='issue' # default search
 
   try:
     result = es.search(index="nakatomi", doc_type="_doc", body={"size":limit, "from":offset, "query": {"query_string": { 'query':query, "fields":["data"], "default_operator":"AND"  } },"sort": { "ctime": { "order": "desc" }}})

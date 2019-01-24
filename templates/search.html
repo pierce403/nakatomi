@@ -8,7 +8,7 @@
       <h2 class="sub-header">{{numresults}} search results for '{{query}}'
       <a href="?q={{query}}&p={{page}}&f=hostlist"> [hostlist]</a></h2>
     {% else %}
-      <h2 class="sub-header">{{numresults}} blocks scanned</h2>
+      <h2 class="sub-header">{{numresults}} vulnerable contracts</h2>
     {% endif %}
     <div class="table-responsive">
       <table class="table table-striped">
@@ -22,7 +22,7 @@
           {% for host in hosts %}
             <tr>
               <td>
-                <h3><a href="host?h={{ host.block }}">{{ host.block }}</a></h3><br>
+                <h3><a href="https://etherscan.io/block/{{ host.block }}">{{ host.block }}</a></h3><br>
               </td>
               <td>
                   {% set lines = host.data.split('\n') %}
