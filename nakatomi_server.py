@@ -111,7 +111,7 @@ def getwork():
   print("coverage updates complete")
 
   # clean up slots
-  c.execute("update mainnet set slotted = false, mtime = 0 where slotted = true and mtime < ? ",(round(time.time()-60*60),)) # wait one hour for slot submission
+  c.execute("update mainnet set slotted = false, mtime = 0 where slotted = true and filled = false and mtime < ? ",(round(time.time()-60*60),)) # wait one hour for slot submission
 
   # reserve the next slot
   result = c.execute("select max(block) from mainnet where slotted = false")
@@ -133,5 +133,11 @@ def submit():
   newscan=json.loads(data)
   newscan['ctime'] = datetime.now()
   nakatomidb.newscan(newscan)
+
+  c = conn.cursor()
+  c.execute("update mainnet set filled = true, mtime = ? where block = ?",(round(time.time()),newscan['block']))
+  conn.commit()
+
+  data = request.get_json()
 
   return "[+] added scan data"
