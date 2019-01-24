@@ -24,7 +24,7 @@ def scan():
   server="http://127.0.0.1:5000"
   print("[+] Fetching Target from %s" % server)
   target_data = json.loads(requests.get(server+"/getwork").text)
-  target = target_data["block"]
+  target = str(target_data["block"])
   #target = str(7118237)
   print("[+] Target: "+str(target))
 
