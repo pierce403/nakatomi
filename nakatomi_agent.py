@@ -31,7 +31,7 @@ def scan():
   #command = ["nmap","-oA","data/nweb."+rand,"-A","-open",target]
   command = ["python3","karl.py","--rpc","infura-mainnet","-vvvv","--block",target]
 
-  process = subprocess.Popen(command,stdout=subprocess.PIPE)
+  process = subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
   try:
     out, err = process.communicate(timeout=60*60) # 1 hour
   except:
@@ -46,7 +46,7 @@ def scan():
 
   result={}
   result["block"]=target
-  result["data"]=str(out)
+  result["data"]=out.decode("utf-8")
 
   # submit result
   print("[+] (%s) Submitting work" % target)
@@ -69,3 +69,4 @@ def main():
 
 if __name__ == "__main__":
   main()
+  #scan()
